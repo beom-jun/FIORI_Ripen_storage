@@ -1,0 +1,133 @@
+/* Enter your custom styles here */
+
+/* 맨 위 창고 정보, 지도 부분 */
+.top-flex {
+    margin-top: 40px;
+}
+
+.top_box {
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    width: 500px;
+    height: 400px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    /* background-color: #d8dfde; */
+}
+
+.storage_info_text{
+    font-size: 20px;
+    font-weight: bolder;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+/* 그 아래 부분 */
+.boxline {
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #b4b2b2;
+    font-size: 30px;
+    height: 130px;
+    width: 220px;
+    padding-left: 20px;
+}
+
+/*  현재 날씨 폰트관리    */
+.temph-font{
+    font-size: 15px;
+    color: rgb(113, 112, 112);
+}
+
+.todaywt{
+    margin-top: 40px;
+    margin-left: 40px;
+    font-weight: 800;
+}
+
+.todaywt Text{
+     font-size: 30px;
+}
+
+/* 주의요망 텍스트 */
+.waring-font{
+    color: red;
+    font-size: 15px;
+}
+
+.dangerText {
+    color: black;
+    font-size: 20px;
+    margin-top: 25px;
+    font-weight: bold;
+}
+
+.dangericon{
+    color: #e33614;
+    margin-right: 15px;
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
+.safeicon{
+    color: #14e352;
+    margin-right: 15px;
+    margin-left: 5px;
+    margin-top: 15px;
+}
+
+.safeText {
+    color: black;
+    font-size: 20px;
+    margin-top: 25px;
+    font-weight: bold;
+}
+
+.tempfont{
+    color: #ccc;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+ /* 오늘 날씨 온도 폰트 */
+.temptext1{
+    font-size: 40px;
+    color: black;
+}
+
+.temptext2{
+    font-size: 40px;
+    color: red;
+}
+
+.temptext3{
+    font-size: 40px;
+    color: blue;
+}
+
+.temptext4{
+    font-size: 40px;
+    color: gray;
+}
+
+.tempicon{
+    margin-left: 15px;
+    margin-top: 5px;
+
+}
+
+.splitbox{
+   margin-top: -20px;
+}
+
+/* ----------------------------Chart 부분분------------------------------- */
+.interval-top{
+    margin-top: 0px;
+}
+
+.interval-top2{
+    margin-top: -20px;
+}

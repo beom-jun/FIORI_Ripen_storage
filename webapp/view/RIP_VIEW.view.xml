@@ -1,0 +1,218 @@
+<mvc:View controllerName="ripeninig.ripeninig.controller.RIP_VIEW"
+     xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:t="sap.ui.table"
+    xmlns:u="sap.ui.unified"
+    xmlns:c="sap.ui.core"
+    xmlns:viz="sap.viz.ui5.controls" 
+    xmlns:m="sap.suite.ui.microchart"
+    xmlns:layout="sap.ui.layout"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    >
+
+    <Page id="page" title="숙성창고 모니터링" showHeader="false" class="sapUiContentPadding">     
+
+        <!--            PLANT LIST BOX          -->
+        <ComboBox
+            id="comboWerks"
+            items="{werksModel>/}"
+            selectedKey="{viewModel>/selectedWerks}"
+            selectionChange=".onPlantChange"
+            change=".onComboChange">
+            <core:Item key="{werksModel>key}" text="{werksModel>text}" />
+        </ComboBox>
+
+        <!--        창고 위치 지도 및 정보      -->
+        <HBox class="todaywt">
+            <Text text="창고정보"></Text>
+        </HBox>
+
+        <HBox class='top-flex' justifyContent="SpaceAround">
+
+            <!-- 창고 정보 -->
+            <VBox class='top_box'>
+                <!-- <Image src="../img/storage1.png" width="100%" height="300px"/>
+                <Text text="창고위치 : 충남 당진시 송악읍 명산리 1320-1" class='storage_info_text'></Text>
+                <Text text="전화번호 : 041-555-7777" class='storage_info_text'></Text> -->
+                <Image id="storageImage" width="100%" height="300px"/>
+                <Text id="storageAddress" class="storage_info_text"/>
+                <Text id="storagePhone" class="storage_info_text"/>
+            </VBox>
+
+            <!-- 창고 지도 api -->
+            <VBox class="top_box" id="mapContainer">
+               
+            </VBox>
+
+        </HBox>
+
+        <!--            오늘 날씨            -->
+
+        <HBox class="todaywt">
+            <Text text="오늘의 날씨"></Text>
+        </HBox>
+        
+        <HBox  alignItems="Center" class="sapUiSmallMargin" justifyContent="SpaceAround">
+
+            <VBox class="boxline">
+                <Text text="현재온도" class="temph-font"/>
+                <HBox class="tempfont">
+                    <Text id="txtTempCurr" class="temptext1"/>
+                    <core:Icon src="sap-icon://temperature" size="2rem" color="black" class="tempicon"/>
+                </HBox>
+            </VBox>
+
+            <VBox class="boxline">
+                <Text text="최고기온" class="temph-font"/>
+                <HBox class="tempfont">
+                    <Text id="txtTempMax" class="temptext2"/>
+                    <core:Icon src="sap-icon://temperature" size="2rem" color="black" class="tempicon"/>
+                </HBox>
+            </VBox>
+
+            <VBox class="boxline">
+                <Text text="최저기온" class="temph-font"/>
+                <HBox class="tempfont">
+                    <Text id="txtTempMin" class="temptext3"/>
+                    <core:Icon src="sap-icon://temperature" size="2rem" color="black" class="tempicon"/>
+                </HBox>
+            </VBox>
+
+            <VBox class="boxline">
+                <Text text="현재습도" class="temph-font"/>
+                <HBox class="tempfont">
+                    <Text id="txtHumidity" class="temptext4"/>
+                    <core:Icon src="sap-icon://cloud" size="2rem" color="black" class="tempicon"/>
+                </HBox>
+            </VBox>
+
+        </HBox>
+
+        <VBox class="todaywt">
+            <Text text="숙성창고 현황"></Text>
+        </VBox>
+
+        <!--        창고온도        -->
+        <HBox  alignItems="Center" class="sapUiSmallMargin" justifyContent="SpaceAround">
+
+            <VBox class="boxline">
+                <Text text="적정온도" class="temph-font"/>
+                <HBox class="tempfont">
+                    <Text text="2°C" class="temptext1"/>
+                    <core:Icon src="sap-icon://temperature" size="2rem" color="black" class="tempicon"/>
+                </HBox>
+            </VBox>
+
+            <VBox class="boxline">
+                <Text text="창고온도" class="temph-font"/>
+                <HBox class="tempfont">
+                    <Text text="{= Math.round(${resultModel>/Tempe}) + '°C'}" class="temptext1"/>
+                    <core:Icon src="sap-icon://temperature" size="2rem" color="black" class="tempicon"/>
+                </HBox>
+            </VBox>
+
+            <VBox class="boxline">
+                <Text text="습도" class="temph-font"/>
+                <HBox class="tempfont">
+                    <Text text="{= Math.round(${resultModel>/Humid}) + '%'}" class="temptext4"/>
+                    <core:Icon src="sap-icon://cloud" size="2rem" color="black" class="tempicon"/>
+                </HBox>
+            </VBox>
+
+            <VBox class="boxline">
+                <Text text="주의상태" class="temph-font"></Text>
+                <HBox>
+                    <core:Icon id="WarningIcon" src="sap-icon://status-positive" size="2.5rem" class="safeicon"/>
+                    <Text id="WarningText" text="양호" class="safeText"/>
+                </HBox>
+
+            </VBox>
+
+        </HBox>  
+
+        <!--            chart area                   -->
+        <!--            chart 폐기량                 -->
+        <VBox >
+            <HBox alignItems="Center" justifyContent="SpaceAround" height="400px" width="100%">
+                <viz:VizFrame
+                    id="idLineFrame"
+                    uiConfig="{applicationSet:'fiori'}"
+                    height="350px" width="1200px"
+                    vizType="line"
+                    class="interval-top"
+                    vizProperties="{
+                        title:{text:'일자별 폐기량'},
+                        legend:{visible: true},
+                        plotArea:{dataLabel:{visible: true}}
+                    }">
+
+                    <viz:dataset>
+                        <viz.data:FlattenedDataset data="{ripeningModel>/}">
+                            <viz.data:dimensions>
+                                <viz.data:DimensionDefinition name="일자" value="{ripeningModel>Datbi}" />
+                                <viz.data:DimensionDefinition name="자재번호" value="{ripeningModel>Matnr}" />
+                            </viz.data:dimensions>
+                            <viz.data:measures>
+                                <viz.data:MeasureDefinition name="폐기량" value="{ripeningModel>Dpose}" />
+                            </viz.data:measures>
+                        </viz.data:FlattenedDataset>
+                    </viz:dataset>
+
+                    <viz:feeds>
+                        <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="일자" />
+                        <viz.feeds:FeedItem uid="color" type="Dimension" values="자재번호" />
+                        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="폐기량" />
+                    </viz:feeds>
+
+                    <viz:dependents>
+                        <viz:Popover id="idPopOver" />
+                    </viz:dependents>
+                </viz:VizFrame>
+            </HBox>
+        </VBox>
+
+        <!--            chart 온도변화 추이                 -->
+        <VBox>
+            <HBox alignItems="Center" justifyContent="SpaceAround" height="400px" width="100%">
+                <viz:VizFrame
+                    id="idLineFrame2"
+                    uiConfig="{applicationSet:'fiori'}"
+                    height="350px" width="1200px"
+                    vizType="line"
+                    class="interval-top2"
+                    vizProperties="{
+                        title:{text:'창고 온도변화 추이'},
+                        legend:{visible: true},
+                        plotArea:{dataLabel:{visible: true}}
+                    }">
+
+                    <viz:dataset>
+                        <viz.data:FlattenedDataset data="{ripeningModel>/}">
+                            <viz.data:dimensions>
+                                <viz.data:DimensionDefinition name="시간" value="{ripeningModel>Temptime}" />
+                                <!-- <viz.data:DimensionDefinition name="자재번호" value="{ripeningModel>Matnr}" /> -->
+                            </viz.data:dimensions>
+                            <viz.data:measures>
+                                <viz.data:MeasureDefinition name="온도°C" value="{ripeningModel>Tempe}" />
+                            </viz.data:measures>
+                        </viz.data:FlattenedDataset>
+                    </viz:dataset>
+
+                    <viz:feeds>
+                        <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="시간" />
+                        <!-- <viz.feeds:FeedItem uid="color" type="Dimension" values="자재번호" />  -->
+                        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="온도°C" />
+                    </viz:feeds>
+
+                    <viz:dependents>
+                        <viz:Popover id="idPopOver2" />
+                    </viz:dependents>
+                </viz:VizFrame>
+            </HBox>
+        </VBox>
+
+    </Page>
+
+</mvc:View>
