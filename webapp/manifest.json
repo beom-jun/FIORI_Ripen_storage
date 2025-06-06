@@ -119,5 +119,9 @@
       "id": "App",
       "async": true
     }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "ripeninigripeninig"
   }
 }

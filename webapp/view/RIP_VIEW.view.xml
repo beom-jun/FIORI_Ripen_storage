@@ -33,9 +33,6 @@
 
             <!-- 창고 정보 -->
             <VBox class='top_box'>
-                <!-- <Image src="../img/storage1.png" width="100%" height="300px"/>
-                <Text text="창고위치 : 충남 당진시 송악읍 명산리 1320-1" class='storage_info_text'></Text>
-                <Text text="전화번호 : 041-555-7777" class='storage_info_text'></Text> -->
                 <Image id="storageImage" width="100%" height="300px"/>
                 <Text id="storageAddress" class="storage_info_text"/>
                 <Text id="storagePhone" class="storage_info_text"/>

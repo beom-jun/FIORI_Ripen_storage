@@ -116,22 +116,23 @@ sap.ui.define([
                             name: "충청 숙성창고",
                             address: "충남 당진시 송악읍 명산리 1320-1",
                             phone: "041-555-7777",
-                            image: "../img/storage1.png"
+                            image: "/img/storage1.png"
                         },
                         "P3000": {
-                            lat: 35.1595, lon: 126.8526,
-                            name: "전라 숙성창고",
-                            address: "광주 서구 상무자유로 123",
-                            phone: "062-555-8888",
-                            image: "../img/storage2.png"
-                        },
-                        "P4000": {
                             lat: 35.8714, lon: 128.6014,
                             name: "경상 숙성창고",
                             address: "대구 수성구 달구벌대로 321",
                             phone: "053-555-9999",
-                            image: "../img/storage3.png"
+                            image: "/img/storage2.png"
+                        },
+                        "P4000": {
+                            lat: 35.1595, lon: 126.8526,
+                            name: "전라 숙성창고",
+                            address: "광주 서구 상무자유로 123",
+                            phone: "062-555-8888",
+                            image: "/img/storage3.png"
                         }
+                        
                     };
 
             const location = locationMap[sWerks] || { lat: 37.5665, lon: 126.9780, name: "서울" };
@@ -139,12 +140,24 @@ sap.ui.define([
             const sIframe = `<iframe width="500" height="400" style="border:0;" loading="lazy" allowfullscreen src="${sMapUrl}"></iframe>`;
             const oHtml = new sap.ui.core.HTML({ content: sIframe });
 
+            // set image:
+            // const sImageUrl = sap.ui.require.toUrl("img/storage1.png");
+            // this.byId("storageImage").setSrc(sImageUrl);
+
+            // set image:
+            // const sAppRootPath = jQuery.sap.getModulePath("ripeninig.ripeninig"); // manifest.json의 sap.app.id 기준
+            // const sImageUrl = sAppRootPath + location.image;
+            // this.byId("storageImage").setSrc(sImageUrl);
+            const sAppRootPath = jQuery.sap.getModulePath("ripeninig.ripeninig");  
+            const sImageUrl = sAppRootPath + location.image;
+            this.byId("storageImage").setSrc(sImageUrl);
+
             const oVBox = this.byId("mapContainer");
             oVBox.removeAllItems();
             oVBox.addItem(oHtml);
             
             // 창고 정보 표시
-            this.byId("storageImage").setSrc(location.image);
+            // this.byId("storageImage").setSrc(location.image);
             this.byId("storageAddress").setText("창고위치 : " + location.address);
             this.byId("storagePhone").setText("전화번호 : " + location.phone);
 
