@@ -15,14 +15,14 @@
     <Page id="page" title="숙성창고 모니터링" showHeader="false" class="sapUiContentPadding">     
 
         <!--            PLANT LIST BOX          -->
-        <ComboBox
+        <Select
             id="comboWerks"
             items="{werksModel>/}"
             selectedKey="{viewModel>/selectedWerks}"
-            selectionChange=".onPlantChange"
-            change=".onComboChange">
+            change=".onPlantChange">
             <core:Item key="{werksModel>key}" text="{werksModel>text}" />
-        </ComboBox>
+        </Select>
+
 
         <!--        창고 위치 지도 및 정보      -->
         <HBox class="todaywt">
@@ -140,7 +140,7 @@
                     vizType="line"
                     class="interval-top"
                     vizProperties="{
-                        title:{text:'일자별 폐기량'},
+                        title:{text:'월별 폐기량'},
                         legend:{visible: true},
                         plotArea:{dataLabel:{visible: true}}
                     }">
